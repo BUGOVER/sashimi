@@ -1,0 +1,642 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html>
+<head>
+  <!-- Добавляем необходимые meta-тэги -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-touch-fullscreen" content="YES">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <!-- ЗАМЕНА -->
+  <link rel="stylesheet" type="text/css" href="food-sushimania/wicart.css">
+  <!-- ЗАМЕНА -->
+
+
+  <link rel="stylesheet" type="text/css" href="sale-service-files/validationEngine.jquery.css">
+  <link rel="stylesheet" href="sale-service-files/jquery.mobile-1.4.5.min.css">
+  <script src="sale-service-files/jquery.min.js" type="text/javascript"></script>
+
+  <script src="sale-service-files/material.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="sale-service-files/material.min.css">
+
+
+  <!-- ЗАМЕНА -->
+  <script src="wc-css-js/wicart.js" type="text/javascript" charset="UTF-8"></script>
+  <script src="wc-css-js/sale-price.js" type="text/javascript" charset="UTF-8"></script>
+  <script src="wc-css-js/jquery.maskedinput.js" type="text/javascript"></script>
+  <!-- ЗАМЕНА -->
+
+  <script src="sale-service-files/jquery.validationEngine-ru.js" type="text/javascript" charset="utf-8"></script>
+  <script src="sale-service-files/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
+
+  <link rel="stylesheet" type="text/css" href="sale-service-files/food-style.css">
+
+  <style type="text/css">body {
+    background-image: url(img/main_bg.png);
+    font-variant-ligatures: normal;
+    font-variant-caps: normal;
+  }
+  .custom-input {
+    width: 101%;
+  }
+
+  a {
+  }
+
+  a:visited {
+  }
+  </style>
+
+</head>
+<body>
+<div style="display: none" class="overlay">Идет отправка заказа</div>
+<!-- ШАПКА -->
+<div class="pages_header">
+  <div id="left_menu" class="buttonsmall_menu"><a href="index.html"><img src="icons/back.png"
+                                                                         style="margin-top: 3px; margin-left: 4px; width: 33px;"></a>
+  </div><!--<div id="left_menu" class="buttonsmall_menu">
+	<a href="dostavka.html"><img src="icons/icon_info3_48.png" style="margin-top: 3px; margin-left: 4px; width: 33px;"></a>
+	</div>-->
+  <div id="right_menu" class="buttonsmall_menu">
+    <a onclick="cart.clearBasket();location.reload();" href="#"><img src="icons/icon-trash.png"
+                                                                     style="margin-top: 3px; margin-left: 4px; width: 33px;"></a>
+  </div>
+  <div id="center_menu" class="food_price">
+
+  </div>
+
+
+</div>
+
+<!--КОНЕЦ ШАПКИ -->
+
+<div style="width:100%; height: 50px;"></div>
+
+
+<!-- ОСНОВНАЯ СТРАНИЦА -->
+
+<div id="wrapper">
+  <div class="message">
+    <div>
+      <center>Корзина пуста</center>
+    </div>
+  </div>
+
+  <div id="basket" class="basket"></div>
+
+  <!---Форма для магазина-------------------------------->
+  <div style="clear: both;"></div>
+  <div class="container">
+    <div id="order" class="popup">
+      <a name="orderform"></a>
+      <form id="formToSend">
+
+        Имя:
+        <input id="name" type="text" class="form-control custom-input" placeholder="укажите как к Вам обращаться">
+        Телефон:
+        <input id="phone" type="phone" placeholder="укажите Ваш контактный телефон" class="validate[required] form-control custom-input">
+
+        Способ обслуживания:
+        <div>
+          <label for="delivery">Доставка</label><input id="delivery" class="form-control" style="transform:scale(1.5);" name="wayDelivery"
+                                                       type="radio" value="delivery" checked="checked">
+          <label for="self-delivery">Самовывоз</label><input id="self-delivery" class="form-control" style="transform:scale(1.5);"
+                                                             name="wayDelivery" value="selfdelivery" type="radio">
+        </div>
+        <div class="group-delivery">
+          <div>
+            Адрес доставки:
+            <input id="place" name="place" type="text" placeholder="укажите улицу, номер дома и квартиры"
+                   class="validate[required] form-control custom-input">
+          </div>
+          Подъезд:
+          <input id="porch" type="text" placeholder="укажите подъезд" class="form-control custom-input">
+          Этаж:
+          <input id="floor" type="text" placeholder="укажите этаж" class="form-control custom-input">
+
+        </div>
+        Укажите время:
+        <div>
+          <div><label for="delivery-fast">Как можно скорее</label>
+            <input style="transform:scale(1.5);" id="delivery-fast" class="form-control"
+                                                                         checked="" name="timeDelivery" value="fast"
+                                                                         type="radio"></div>
+          <div><label for="delivery-time">Ко времени</label><input style="transform:scale(1.5);" id="delivery-time"
+                                                                   name="timeDelivery" value="time" type="radio" class="form-control "></div>
+          <div class="group-time">
+            <label for="time-hour">ч.</label>
+            <select name="hour" id="time-hour" class="form-control">
+              <option value="1">1
+              <option value="2">2
+              <option value="3">3
+              <option value="4">4
+              <option value="5">5
+              <option value="6">6
+              <option value="7">7
+              <option value="8">8
+              <option value="9">9
+              <option value="10">10
+              <option value="11">11
+              <option value="12">12
+              <option value="13">13
+              <option value="14">14
+              <option value="15">15
+              <option value="16">16
+              <option value="17">17
+              <option value="18">18
+              <option value="192">19
+              <option value="20">20
+              <option value="21">21
+              <option value="22">22
+              <option value="23">23
+              <option value="24">24
+            </select>
+            <label for="time-min">мин.</label>
+            <select name="min" id="time-min" class="form-control">
+              <option value="0">00
+              <option value="10">10
+              <option value="20">20
+              <option value="30">30
+              <option value="40">40
+              <option value="50">50
+            </select>
+          </div>
+
+
+        </div>
+        <div>
+          Нужна сдача с:
+          <input id="odd-money" name="odd-money" type="text" class="form-control custom-input">
+        </div>
+        <div>
+          Выберите кафе:
+          <select name="cafeName" id="cafeId" class="form-control">
+            <option value="">--
+          </select>
+        </div>
+        Промо купон:
+        <input id="promo" placeholder="если есть" name="promo" type="text" class="form-control custom-input">
+        <!--Дата и время доставки:
+  <input id="time" type="text" placeholder="Укажите желаемые дату и время доставки" class="validate[required]">-->
+        <!--
+  <b>ТЕЛЕФОН ПОЛУЧАТЕЛЯ:</b>
+  <input id="phone" type="text" placeholder="Укажите контактный телефон получателя">
+  <b>ТЕКСТ НА ОТКРЫТКЕ:</b>
+
+  <input id="place" type="text" placeholder="Укажите желаемый текст">
+  <br>
+  <center><b style="color:#000000; font-size: 20px;">Оплата заказа на карту СБЕРБАНК:</b><br>
+  <p style="color:#654696; font-size: 28px; margin: 0px 0;">63900262 9008117664</p></center>
+  <b style="color:#000000; font-size: 14px; line-height:1.4;"><center>(Получатель: Нугаева Карина Альбертовна<br>
+  Срок действия карты: 12/17)</center></b><br>-->
+
+        <!--<b>АДРЕС ДОСТАВКИ</b><br>
+  Населенный пункт:
+  <!------------------------------------
+  - Добавляем свойство data-email описанный в sendmail.php
+  - data-email="email_1"
+  - Каждый ключ отправит отдельный емаил
+  ------------------------------------>
+        <!--<select id="dostavka" style="width:100%; margin: 10px; padding: 5px; font-size: 14px;">
+  <option data-dost="Альметьевск" data-email="email_1" class="dost" selected="" defaultselected="" value="Альметьевск">Альметьевск
+  <!--<option data-dost="Бугульма" data-email="email_2" class="region" value="Бугульма">Бугульма</option>
+  <option data-dost="Набережные Челны" data-email="email_3"class="region" value="Набережные Челны">Набережные Челны</option>
+  <option data-dost="Набережные Челны" data-email="email_4"class="region" value="Набережные Челны">Казань</option>-->
+        <!--</select>
+  <br>
+  <!--Улица, номер дома:
+  <input id="address" type="text" placeholder="Укажите улицу, номер дома">-->
+      </form>
+      <!-- СМЕНА -->
+      <form action="http://rob.loc/api/v1/new" method="POST" name="post-form" id="post-form">
+        <input type="hidden" name="post-order" id="post-order" class="form-control custom-input">
+        <!---------------------------------------
+  - Добавляем поле для отправки ключа
+  --------------------------------------->
+        <div id="data_form">
+
+
+          <input type="hidden" name="post-name" id="post-name">
+          <input type="hidden" name="post-phone" id="post-phone">
+          <input type="hidden" name="post-place" id="post-place">
+          <input type="hidden" name="post-wayDelivery" id="post-wayDelivery">
+          <input type="hidden" name="post-porch" id="post-porch">
+          <input type="hidden" name="post-floor" id="post-floor">
+          <input type="hidden" name="post-timeDelivery" id="post-timeDelivery">
+          <input type="hidden" name="post-hour" id="post-hour">
+          <input type="hidden" name="post-min" id="post-min">
+          <input type="hidden" name="post-cafeId" id="post-cafeId">
+          <input type="hidden" name="post-promo" id="post-promo">
+          <input type="hidden" name="post-discount" id="post-discount">
+
+        </div>
+      </form>
+
+      <div class="wiall"></div>
+      <div class="error-min-delivery">
+
+      </div>
+      <div id="itog"></div>
+      <div>
+        <button id="sendBusketButton" class="bbutton-basket"
+                onclick="cart.sendOrder('formToSend,htable,bsum');return false;" href="#!">Отправить заказ
+        </button>
+      </div>
+
+      <div style="height: 40px;"></div>
+      <br>
+      <!--<a class="bbutton green" onclick="cart.sendOrder('formToSend,htable,bsum,sum-dost-contener');" href="#!">Отправить заказ</a>-->
+    </div>
+  <!----------------------------------------------------->
+
+</div>
+
+
+<script>
+  $(document).ready(function() {
+//		var discount = 0;
+//		$('#promo').on('change', function () {
+//
+//			if($(this).val() == settings.setting[3].value) {
+//				discount = settings.setting[4].value;
+//				$('.error-min-delivery').text('');
+//				$('.bdiscount span').text(settings.setting[4].value + '%');
+//				rebusk();
+//			}
+//		});
+    $('.delivery_info_basket').append('<div class="bdelivery">ДОСТАВКА <span class="card_body_right"></span></div>');
+//		$('.delivery_info_basket').append('<div class="bdiscount">СКИДКА <span class="card_body_right">0</span></div>');
+    $('#itog').append('<div class="bitog">ИТОГО <span class="card_body_right"></span></div>');
+    var settings = $.ajax({
+      url: 'https://sashimi59.proapp-mobi.ru/api/v1/settings',
+      dataType: 'json',
+      async: false,
+    }).responseJSON;
+    var cafe = settings.cafe;
+    $('#cafeId').html('');
+    for (caf in cafe) {
+      $('#cafeId').append('<option value="' + cafe[caf]['id'] + '">' + cafe[caf]['name'] + '</option>');
+    }
+    var rebusk = function() {
+      var sum = Math.round($('#bsum').text().replace(/\D+/g, ''));
+      var deliveryMin = settings.setting[0].value;
+      if (parseInt(sum) < parseInt(deliveryMin)) {
+        $('.error-min-delivery').append('<span>Внимание! Минимальная сумма заказа ' + deliveryMin + ' Ք</span>');
+        $('#sendBusketButton').hide();
+      } else {
+        $('#sendBusketButton').show();
+        $('.error-min-delivery').html('');
+      }
+      var deliveryCost = settings.setting[2].value;
+      var deliveryFree = settings.setting[1].value;
+
+      if (parseInt(sum) > parseInt(deliveryFree)) {
+        $('.bdelivery span').text('БЕСПЛАТНО');
+        $('.bitog span').text(sum.toString() + ' Ք');
+      } else {
+        var res = parseInt(deliveryCost) + parseInt(sum);
+        $('.bdelivery span').text(deliveryCost + ' Ք');
+        $('.bitog span').text(res.toString() + ' Ք');
+      }
+    };
+
+    rebusk();
+    $(cart).on('deleteItem', rebusk);
+
+    $('.cart_mp').on('click', rebusk);
+    $('input[name="wayDelivery"]').on('click', function() {
+      if ($('input[name="wayDelivery"]:checked').val() == 'delivery') {
+        $('.group-delivery').show();
+      } else {
+        $('.group-delivery').hide();
+      }
+    });
+    $('.group-time').hide();
+    $('input[name="timeDelivery"]').on('click', function() {
+      if ($('input[name="timeDelivery"]:checked').val() == 'time') {
+        $('.group-time').show();
+      } else {
+        $('.group-time').hide();
+      }
+    });
+
+    $('#phone').mask('+7 (999) 999-9999');
+    $('#formToSend').validationEngine({promptPosition: 'topLeft'});
+    $('#bcontainer').css({'position': 'static'});
+    $('#basket').append($('#bcontainer'));
+    $('#bcontainer').show();
+
+    $(cart).on('clickSendForm', function() {
+      for (item in cart.DATA) {
+        $('#data_form').
+            append('<input type="hidden" name="produts[' + item + ']" value="' + cart.DATA[item].num + '">');
+      }
+      if ($('#name').size() > 0) {
+        $('#post-name').val($('#name').val());
+      }
+      if ($('#phone').size() > 0) {
+        $('#post-phone').val($('#phone').val());
+      }
+      if ($('#place').size() > 0) {
+        $('#post-place').val($('#place').val());
+      }
+      if ($('input[name="wayDelivery"]:checked').size() > 0) {
+        $('#post-wayDelivery').val($('input[name="wayDelivery"]:checked').val());
+      }
+      if ($('#porch').size() > 0) {
+        $('#post-porch').val($('#porch').val());
+      }
+      if ($('#floor').size() > 0) {
+        $('#post-floor').val($('#floor').val());
+      }
+      if ($('input[name="timeDelivery"]:checked').size() > 0) {
+        if ($('input[name="timeDelivery"]:checked').val() == 'time') {
+          $('#post-hour').val($('#time-hour').val());
+          $('#post-min').val($('#time-min').val());
+        }
+        $('#post-timeDelivery').val($('input[name="timeDelivery"]:checked').val());
+      }
+      if ($('#cafeId').size() > 0) {
+        $('#post-cafeId').val($('#cafeId').val());
+      }
+      if ($('#promo').size() > 0) {
+        $('#post-promo').val($('#promo').val());
+      }
+      for (item in cart.DATA) {
+        $('#data_form').
+            append('<input type="hidden" name="produts[' + item + ']" value="' + cart.DATA[item].num + '">');
+      }
+    });
+  });
+</script>
+
+
+<script aria-hidden="true" type="application/x-lastpass" id="hiddenlpsubmitdiv" style="display: none;"></script>
+<script>
+try {
+  (function() {
+    for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
+      var lastpass_f = document.forms[lastpass_iter];
+      if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
+        lastpass_f.lpsubmitorig2 = lastpass_f.submit;
+        if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
+          continue;
+        }
+        lastpass_f.submit = function() {
+          var form = this;
+          var customEvent = document.createEvent('Event');
+          customEvent.initEvent('lpCustomEvent', true, true);
+          var d = document.getElementById('hiddenlpsubmitdiv');
+          if (d) {
+            for (var i = 0; i < document.forms.length; i++) {
+              if (document.forms[i] == form) {
+                if (typeof(d.innerText) != 'undefined') {
+                  d.innerText = i.toString();
+                } else {
+                  d.textContent = i.toString();
+                }
+              }
+            }
+            d.dispatchEvent(customEvent);
+          }
+          form.lpsubmitorig2();
+        };
+      }
+    }
+  })();
+} catch (e) {
+}</script>
+<script>try {
+  (function() {
+    for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
+      var lastpass_f = document.forms[lastpass_iter];
+      if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
+        lastpass_f.lpsubmitorig2 = lastpass_f.submit;
+        if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
+          continue;
+        }
+        lastpass_f.submit = function() {
+          var form = this;
+          var customEvent = document.createEvent('Event');
+          customEvent.initEvent('lpCustomEvent', true, true);
+          var d = document.getElementById('hiddenlpsubmitdiv');
+          if (d) {
+            for (var i = 0; i < document.forms.length; i++) {
+              if (document.forms[i] == form) {
+                if (typeof(d.innerText) != 'undefined') {
+                  d.innerText = i.toString();
+                } else {
+                  d.textContent = i.toString();
+                }
+              }
+            }
+            d.dispatchEvent(customEvent);
+          }
+          form.lpsubmitorig2();
+        };
+      }
+    }
+  })();
+} catch (e) {
+}</script>
+<script>try {
+  (function() {
+    for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
+      var lastpass_f = document.forms[lastpass_iter];
+      if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
+        lastpass_f.lpsubmitorig2 = lastpass_f.submit;
+        if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
+          continue;
+        }
+        lastpass_f.submit = function() {
+          var form = this;
+          var customEvent = document.createEvent('Event');
+          customEvent.initEvent('lpCustomEvent', true, true);
+          var d = document.getElementById('hiddenlpsubmitdiv');
+          if (d) {
+            for (var i = 0; i < document.forms.length; i++) {
+              if (document.forms[i] == form) {
+                if (typeof(d.innerText) != 'undefined') {
+                  d.innerText = i.toString();
+                } else {
+                  d.textContent = i.toString();
+                }
+              }
+            }
+            d.dispatchEvent(customEvent);
+          }
+          form.lpsubmitorig2();
+        };
+      }
+    }
+  })();
+} catch (e) {
+}</script>
+<script>try {
+  (function() {
+    for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
+      var lastpass_f = document.forms[lastpass_iter];
+      if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
+        lastpass_f.lpsubmitorig2 = lastpass_f.submit;
+        if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
+          continue;
+        }
+        lastpass_f.submit = function() {
+          var form = this;
+          var customEvent = document.createEvent('Event');
+          customEvent.initEvent('lpCustomEvent', true, true);
+          var d = document.getElementById('hiddenlpsubmitdiv');
+          if (d) {
+            for (var i = 0; i < document.forms.length; i++) {
+              if (document.forms[i] == form) {
+                if (typeof(d.innerText) != 'undefined') {
+                  d.innerText = i.toString();
+                } else {
+                  d.textContent = i.toString();
+                }
+              }
+            }
+            d.dispatchEvent(customEvent);
+          }
+          form.lpsubmitorig2();
+        };
+      }
+    }
+  })();
+} catch (e) {
+}</script>
+<script>try {
+  (function() {
+    for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
+      var lastpass_f = document.forms[lastpass_iter];
+      if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
+        lastpass_f.lpsubmitorig2 = lastpass_f.submit;
+        if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
+          continue;
+        }
+        lastpass_f.submit = function() {
+          var form = this;
+          var customEvent = document.createEvent('Event');
+          customEvent.initEvent('lpCustomEvent', true, true);
+          var d = document.getElementById('hiddenlpsubmitdiv');
+          if (d) {
+            for (var i = 0; i < document.forms.length; i++) {
+              if (document.forms[i] == form) {
+                if (typeof(d.innerText) != 'undefined') {
+                  d.innerText = i.toString();
+                } else {
+                  d.textContent = i.toString();
+                }
+              }
+            }
+            d.dispatchEvent(customEvent);
+          }
+          form.lpsubmitorig2();
+        };
+      }
+    }
+  })();
+} catch (e) {
+}</script>
+<script>try {
+  (function() {
+    for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
+      var lastpass_f = document.forms[lastpass_iter];
+      if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
+        lastpass_f.lpsubmitorig2 = lastpass_f.submit;
+        if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
+          continue;
+        }
+        lastpass_f.submit = function() {
+          var form = this;
+          var customEvent = document.createEvent('Event');
+          customEvent.initEvent('lpCustomEvent', true, true);
+          var d = document.getElementById('hiddenlpsubmitdiv');
+          if (d) {
+            for (var i = 0; i < document.forms.length; i++) {
+              if (document.forms[i] == form) {
+                if (typeof(d.innerText) != 'undefined') {
+                  d.innerText = i.toString();
+                } else {
+                  d.textContent = i.toString();
+                }
+              }
+            }
+            d.dispatchEvent(customEvent);
+          }
+          form.lpsubmitorig2();
+        };
+      }
+    }
+  })();
+} catch (e) {
+}</script>
+<script>try {
+  (function() {
+    for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
+      var lastpass_f = document.forms[lastpass_iter];
+      if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
+        lastpass_f.lpsubmitorig2 = lastpass_f.submit;
+        if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
+          continue;
+        }
+        lastpass_f.submit = function() {
+          var form = this;
+          var customEvent = document.createEvent('Event');
+          customEvent.initEvent('lpCustomEvent', true, true);
+          var d = document.getElementById('hiddenlpsubmitdiv');
+          if (d) {
+            for (var i = 0; i < document.forms.length; i++) {
+              if (document.forms[i] == form) {
+                if (typeof(d.innerText) != 'undefined') {
+                  d.innerText = i.toString();
+                } else {
+                  d.textContent = i.toString();
+                }
+              }
+            }
+            d.dispatchEvent(customEvent);
+          }
+          form.lpsubmitorig2();
+        };
+      }
+    }
+  })();
+} catch (e) {
+}</script>
+<script>try {
+  (function() {
+    for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
+      var lastpass_f = document.forms[lastpass_iter];
+      if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
+        lastpass_f.lpsubmitorig2 = lastpass_f.submit;
+        if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
+          continue;
+        }
+        lastpass_f.submit = function() {
+          var form = this;
+          var customEvent = document.createEvent('Event');
+          customEvent.initEvent('lpCustomEvent', true, true);
+          var d = document.getElementById('hiddenlpsubmitdiv');
+          if (d) {
+            for (var i = 0; i < document.forms.length; i++) {
+              if (document.forms[i] == form) {
+                if (typeof(d.innerText) != 'undefined') {
+                  d.innerText = i.toString();
+                } else {
+                  d.textContent = i.toString();
+                }
+              }
+            }
+            d.dispatchEvent(customEvent);
+          }
+          form.lpsubmitorig2();
+        };
+      }
+    }
+  })();
+} catch (e) {
+}</script>
+</div></body>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta name="apple-touch-fullscreen" content="YES">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <link rel="stylesheet" type="text/css" href="sale2/wicart.css">
+  <link rel="stylesheet" type="text/css" href="sale2/validationEngine.jquery.css">
+  <link rel="stylesheet" href="sale/jquery.mobile-1.4.5.min.css">
+  <script src="sale2/jquery.min.js" type="text/javascript"></script>
+  <script src="sale2/wicart.js" type="text/javascript" charset="UTF-8"></script>
+  <script src="sale2/sale-price.js" type="text/javascript" charset="UTF-8"></script>
+  <script src="sale2/jquery.maskedinput.js" type="text/javascript"></script>
+  <script src="sale2/jquery.validationEngine-ru.js" type="text/javascript" charset="utf-8"></script>
+  <script src="sale2/jquery.validationEngine.js" type="text/javascript" charset="utf-8"></script>
+
+  <link rel="stylesheet" type="text/css" href="sale2/style.css">
+  <style type="text/css">    body {
+    font-family: Helvetica;
+    background: white;
+    color: black;
+    line-height: 16px;
+    background-image: url();
+    background-color:;
+  }
+
+  #wrap {
+    margin: 1px auto;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .content {
+    padding-top: 10px;
+    font-size: 12px;
+    text-align: justify;
+  }
+
+  .gridmenuimagecontainer {
+    min-width: 100%;
+    width: 100%;
+  }
+
+  .gridmenuimagecontainer a {
+    position: relative;
+  }
+
+  .gridmenuitemBg {
+    width: 100%;
+    font-size: 22px;
+    padding: 8px 0px;
+    bottom: 3px;
+    text-align: center;
+    font-family: Sans-serif;
+    font-weight: 100;
+    position: absolute;
+    right: 1px;
+  }
+
+  .gridmenuimage {
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    min-height: 150px;
+    min-width: 100%;
+    border: 0px;
+  }
+
+  /* картинка с названием *//* кнопка */
+  .myButton {
+    -moz-box-shadow: inset 0px 1px 0px 0px #f6c36f;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #f6c36f;
+    box-shadow: inset 0px 1px 0px 0px #f6c36f;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f6c36f), color-stop(1, #f6c36f));
+    background: -moz-linear-gradient(top, #f6c36f 5%, #f6c36f 100%);
+    background: -webkit-linear-gradient(top, #f6c36f 5%, #f6c36f 100%);
+    background: -o-linear-gradient(top, #f6c36f 5%, #f6c36f 100%);
+    background: -ms-linear-gradient(top, #f6c36f 5%, #f6c36f 100%);
+    background: linear-gradient(to bottom, #f6c36f 5%, #f6c36f 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6c36f', endColorstr='#f6c36f', GradientType=0);
+    background-color: #f6c36f;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #dcdcdc;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 17px;
+    padding: 7px 20px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #f6c36f;
+    float: right
+  }
+
+  .myButton:hover {
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #f6c36f), color-stop(1, #f6c36f));
+    background: -moz-linear-gradient(top, #f6c36f 5%, #f6c36f 100%);
+    background: -webkit-linear-gradient(top, #f6c36f 5%, #f6c36f 100%);
+    background: -o-linear-gradient(top, #f6c36f 5%, #f6c36f 100%);
+    background: -ms-linear-gradient(top, #f6c36f 5%, #f6c36f 100%);
+    background: linear-gradient(to bottom, #f6c36f 5%, #f6c36f 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f6c36f', endColorstr='#f6c36f', GradientType=0);
+    background-color: #f6c36f;
+  }
+
+  .myButton:active {
+    position: relative;
+    top: 3px;
+  }
+
+  /* ингридиенты */
+  h5 {
+    font: 500 0.75em/1 'Raleway', sans-serif;
+    color: rgba(0, 0, 0, .5);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .4em;
+    position: relative;
+    width: 100%;
+  }
+
+  /* цена */
+  h4 {
+    font: 600 1em 'Raleway', sans-serif;
+    color: rgba(0, 0, 0, .5);
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    position: relative;
+    width: 80%;
+    top: -38px;
+    left: 50px;
+  }
+
+  /* линия */
+  .hr {
+    border: 0;
+    width: 30%;
+    color: #bcbcbc;
+    background-color: #bcbcbc;
+    height: 3px;
+    position: relative;
+    left: 35%;
+    margin-top: 110px;
+    margin-bottom: 40px;
+  }
+
+  .cena {
+    width: 50%;
+    float: left;
+  }
+
+  .korzina {
+    padding-top: 13px;
+    width: 50%;
+    float: right
+  }
+
+  .cenakorzina {
+    width: 100%;
+  }
+
+  a:visited {
+  }
+  </style>
+</head>
+<body>
+<script>
+
+  $(document).ready(function() {
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    let productId = localStorage.getItem('product_id');
+    let productIdUrl = 'https://sashimi59.proapp-mobi.ru/api/v1/product/' + productId;
+
+    $.ajax({
+      url: productIdUrl,
+      type: 'GET',
+      crossDomain: true,
+      dataType: 'json',
+      success: function(data) {
+
+        // for (row in data) {
+        cart.plus = function(butbas) {
+
+          var cartItemID = 'ID' + $(butbas).attr('id-item');
+          var ID = $(this).attr('id');
+          var cartNum = parseInt($('#basket_num_' + cartItemID).text());
+          var cartNum = (cartNum < 1000000) ? cartNum + 1 : 1000000;
+
+          if (cart.DATA[cartItemID] !== undefined) {
+            cart.DATA[cartItemID].num = cartNum;
+            $('#basket_num_' + cartItemID).html(cartNum);
+            $('#hbasket_num_' + cartItemID).html(cartNum);
+            var price = parseFloat($('#lineprice_' + cartItemID).html());
+            $('#linesum_' + cartItemID).html(parseFloat(price * cartNum));
+            $('#hlinesum_' + cartItemID).html(parseFloat(price * cartNum));
+          }
+
+          cart.sumAll();
+          cart.reCalc();
+
+        };
+
+        var num = cart.DATA['ID' + data.id_product] !== undefined ?
+            cart.DATA['ID' + data.id_product].num :
+            0;
+
+        var html =
+            '<div id="wrap"> \
+            <div data-layout="menuitem" class="gridmenuimagecontainer">\
+            <a data-layout-editable="link" href="#" parentcontid="content">\
+            \
+            <img data-layout-editable="image" src="https://sashimi59.proapp-mobi.ru/img/' +
+            data.img + '" class="gridmenuimage" id="wiphoto_' + data.id_product + '" title="Item12" style="color: rgb(41, 41, 41); margin-top: 68px;"> \
+							\
+							<div data-layout-editable="text" class="gridmenuitemBg" style="color: rgb(255, 255, 255); opacity: 0.6;        					background: rgb(25, 36, 45);">' +
+            data.name + '</div> \
+					</a> \
+					</div> \
+					<p style="text-align: left; font-weight: normal; font-size: 16px; color: rgb(135, 135, 135); margin-left: 6px;">' +
+            data.desc + '</p> \
+              </div> \
+					<div class="colomn" style="vertical-align:top; text-align: -webkit-right;"> \
+							<div class="col" style="vertical-align:top; width:20px; text-align:center;"><a id="minus_' +
+            data.id_product + '"><img src="icons/icon-minus.png" width="25"/></a></div> \
+							<div class="col" style="width:20px; text-align:center; padding-top: 2px;"><center><b><span id="basket_num_ID' +
+            data.id_product + '" style="font-size: 16px;">' + num + '</span></b></center></div> \
+							<div class="col" style="vertical-align:top; width:20px; text-align:center;"><a  onclick="cart.addToCart(this, \'' +
+            data.id_product + '\', priceList[\'' + data.id_product + '\']); return false" id="plus_' +
+            data.id_product + '"><img src="icons/icon-plus.png" width="25"/></a></div> \
+							</div> \
+					<div class="cenakorzina"> \
+							<div id="right"><a href="#" class="myButton" onclick="cart.addToCart(this, \'' + data.id_product +
+            '\', priceList[\'' + data.id_product + '\']); return false" style="background-color: rgb(93, 186, 0); padding: 6px 10px; border-radius: 4px; border-style: solid; border-width: 1px; border-color: rgb(255, 255, 255); color: rgb(176, 176, 176); margin-top: 13px; margin-right: 6px; font-size: 17px; color: rgb(255, 255, 255);">в корзину</a></div> \
+					<div class="cena">&nbsp;<img src="icons/many.png" style="max-width: 100%; top: 10px; position: relative;">&nbsp;<h4>' +
+            data.price + '</h4> \
+					</div> \
+					</div> \
+					<div class="hr"></div> \
+							</div>';
+
+        $('#content').append(html);
+
+        $('#minus_' + data.id_product).bind('click', function() {
+          var cartItemID = 'ID' + $(this).attr('id').substr(6);
+          var cartNum = parseInt($('#basket_num_' + cartItemID).text());
+          var cartNum = (cartNum > 0) ? cartNum - 1 : 0;
+          cart.DATA[cartItemID].num = cartNum;
+          $('#basket_num_' + cartItemID).html(cartNum);
+          $('#hbasket_num_' + cartItemID).html(cartNum);
+          var price = parseFloat($('#lineprice_' + cartItemID).html());
+          $('#linesum_' + cartItemID).html(parseFloat(price * cartNum));
+          $('#hlinesum_' + cartItemID).html(parseFloat(price * cartNum));
+          if (cart.DATA[cartItemID].num == 0) {
+            cart.delItem(cartItemID);
+          }
+          cart.sumAll();
+
+          cart.reCalc();
+
+        });
+
+        $('#plus_' + data.id_product).bind('click', function() {
+          var cartItemID = 'ID' + $(this).attr('id').substr(5);
+          var ID = 'ID' + $(this).attr('id').substr(5);
+          var cartNum = parseInt($('#basket_num_' + cartItemID).text());
+          var cartNum = (cartNum < 1000000) ? cartNum + 1 : 1000000;
+          if (cart.DATA[cartItemID] !== undefined) {
+            cart.DATA[cartItemID].num = cartNum;
+            $('#basket_num_' + cartItemID).html(cartNum);
+            $('#hbasket_num_' + cartItemID).html(cartNum);
+            var price = parseFloat($('#lineprice_' + cartItemID).html());
+            $('#linesum_' + cartItemID).html(parseFloat(price * cartNum));
+            $('#hlinesum_' + cartItemID).html(parseFloat(price * cartNum));
+          }
+
+          cart.sumAll();
+          cart.reCalc();
+
+        });
+
+        // }
+      },
+    });
+
+  });
+
+</script>
+<!-- ШАПКА -->
+<div class="pages_header" style="height: 80px;">
+  <div class="pages_header_text"
+       style="font-weight: normal; font-size: 16px; color: rgb(227, 86, 76); margin-top: 31px;">
+    <div class="form_search" style="width:96%; margin-top:-15px;">
+      <div class="col" style="padding: 0px;"><a class="little" href="#!" onclick="cart.clearBasket()"><img
+          src="icons/icon-trash2.png" style="margin: 5px 7px 0px 3px; width: 33px;"></a></div>
+      <div class="col"
+           style="width: 100%; text-align: center; font-size: 14px; height: 30px; vertical-align: middle; display: table-cell; color: rgb(101, 70, 150);">
+        <div id="wicart-basket">
+          <div class="wicart-basket-info" style="margin-top: 5px;"><span id="basketwidjet"
+                                                                         style="color: rgb(227, 86, 76);">Товаров:  1<br>Сумма:  240 Руб.</span>
+          </div>
+        </div>
+      </div>
+      <div class="col" style="padding: 0px;"><a href="basket.html"><img src="icons/icon-basket_48.png"
+                                                                        style="margin: 5px 3px 0px 3px; width: 22px;"></a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- КОНЕЦ ШАПКИ -->
+<div id="content">
+
+</div>
+
+
+<!--<a href="vybor_bara.html"><img src="cart2.png" style="max-width: 100%; right: 9px; bottom: 0%; position: fixed;"></a>-->
+
+</body>
+</html>

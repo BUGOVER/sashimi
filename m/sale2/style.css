@@ -1,0 +1,467 @@
+@font-face
+{
+font-family: 'RobotoBold';
+src: url('fonts/RobotoCondensed-Bold.ttf');
+font-weight: normal;
+font-style: normal;
+
+}
+@font-face
+{
+font-family: 'RobotoLight';
+src: url('fonts/RobotoCondensed-Light.ttf');
+font-weight: normal;
+font-style: normal;
+
+}
+@font-face
+{
+font-family: 'RobotoRegular';
+src: url('fonts/RobotoCondensed-Regular.ttf');
+font-weight: normal;
+font-style: normal;
+line-height: 0.6;
+
+}
+@font-face
+{
+font-family: 'LobsterRegular';
+src: url('fonts/Lobster-Regular.ttf');
+font-weight: normal;
+font-style: normal;
+
+}
+html, body
+{
+  padding: 0;
+  margin: 0;
+  font-family: 'RobotoRegular';
+  color:#212121;
+  background-image:url();
+  background-color:#ffffff;
+  
+}
+a
+{
+  text-decoration:none;
+  -webkit-tap-highlight-color: transparent;
+
+}
+.mainmenu_conteiner/*контейнер пунктов главного меню*/
+{
+  min-width:100/*150*/px;
+  width:100%;
+  padding:0;
+  margin:0px 0 0 0;
+ 
+}
+.mainmenu_conteiner a
+{
+  position: relative;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+.mainmenu_image/*фон у контейнеров пунктов главного меню*/
+{
+  /*padding:10px 0px;
+  margin-left:15%;
+*/  width:100%;
+  border-radius:0px;
+    
+}
+.mainmenu_ribbon/*нижняя полоса контейнеров пунктов главного меню*/
+{
+  width:100%;
+  font-family: 'RobotoBold';
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  padding:6px 0 0 0;
+  position: absolute;
+  height: 50px;
+  bottom: 4px;
+  color:#654696;
+  text-transform: uppercase;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius:0px 0px 0px 0px;
+  line-height: 0.8;
+
+}
+.mainmenu_ribbon span
+{
+  font-family: 'RobotoLight';
+  font-size: 14px;
+  color:#654696;
+  text-transform: uppercase;
+ 
+}
+.line/*Горизонтальная линия*/
+{
+  width: 60%;
+  border-top: 1px solid #654696;
+  margin-left: 20%;
+  margin-top: 7px;
+  margin-bottom: 0px;
+
+}
+.inpage_conteiner/*контейнер пунктов главного меню*/
+{
+  min-width:100/*150*/px;
+  width:100%;
+  padding:0;
+  margin:0 0 4px 0;
+  background: url(images/bg3.jpg) 100% 100% no-repeat;
+ /* Добавляем фон */ background-size: cover;
+ /* Масштабируем фон */  
+}
+.inpage_conteiner a
+{
+  position: relative;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+}
+.inpage_conteiner img
+{
+  width:50%;
+  margin-left:48%;
+  padding: 40px 0px 0px 0;
+ 
+}
+.inpage_button/*кнопки*/
+{
+  width:70%;
+  font-family: 'RobotoBold';
+  font-size: 28px;
+  text-align: center;
+  padding:0px 0 0px 0;
+  /*position: relative;
+*/    /*height: 50px;
+*/  /*bottom: 0px;
+*/  color:#654696;
+  text-transform: uppercase;
+  background-color: rgba(255, 255, 255, 1.0);
+  border-radius:10px 10px;
+  margin-left:15%;
+  margin-right:15%;
+  margin-top:7px;
+  margin-bottom:7px;
+  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.5);
+  
+}
+/*.inpage_ribbon/*нижняя полоса контейнеров пунктов главного меню*//*
+{
+  width:100%;
+  font-family: 'RobotoBold';
+  font-size: 20px;
+  text-align: center;
+  padding:3px 0 4px 0;
+  position: relative;
+  bottom: 0px;
+  z-index: 110;
+  height: 25px;
+  /*bottom: 0px;
+*//*  color:#654696;
+  text-transform: uppercase;
+  background-color: rgba(255, 255, 255, 1.0);
+  border-radius:0px 0px 0px 0px;
+  
+}
+*/.inpage_ribbon /* Кнопка подарить */
+{
+  width:100px;
+  font-family: 'RobotoBold';
+  font-size: 16px;
+  text-align: center;
+  padding:5px 20px 5px 20px;
+  position: relative;
+  left: 10px;
+  bottom: 15px;
+  z-index: 110;
+  height: 20px;
+  color:#654696;
+  text-transform: uppercase;
+  background-color: rgba(255, 255, 255, 1.0);
+  border-radius:10px 2px 10px 2px;
+
+}
+.inpage_ribbon:active 
+{
+  color:#ffffff;
+  background-color: #654696;
+   box-shadow: inset 0 0 0 1px #ffffff;
+
+}
+.up_ribbon/*лента вверху*/
+{
+  position: absolute;
+  z-index: 100;
+  width: 90%;
+  padding: 0px 0 0 12px;
+  margin-top:-5px;
+  background-color: rgba(255, 255, 255, 0.0);
+
+}
+.name /* название */
+{
+  font-family: 'RobotoLight';
+  font-size: 20px;
+  text-transform: uppercase;
+  color:#ffffff;
+  
+}
+.description /* описание */
+{
+  width: 45%;
+  font-family: 'RobotoLight';
+  font-size: 14px;
+  line-height: 1.0;
+  color:#ffffff;
+
+}
+.cost /* цена */
+{
+  font-family: 'RobotoLight';
+  font-size: 20px;
+  color:#ffffff;
+
+}
+.pages_head/*шапка*/
+{
+  width:100%;
+  height:50px;
+  position:fixed;
+  left:0px;
+  top:0px;
+  background:#ffffff;
+  z-index:1001;
+  background: -webkit-gradient(linear, center top, center bottom, from(#f5f5f5), color-stop(25%, #f0f0f0), color-stop(50%, #ebebeb), color-stop(75%, #f0f0f0), to(#f5f5f5));
+  -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+
+}
+.pages_header/* Шапка */
+{
+width:100%;
+height:100px;
+position:fixed;
+left:0px;
+top:0px;
+background:#ffffff;
+z-index: 1000;
+-webkit-tap-highlight-color: transparent;
+-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+-moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+
+}
+.pages_header_text
+{
+color:#654696;
+font-family: 'RobotoRegular';
+text-transform:uppercase;
+text-shadow: none;
+font-size:24px;
+line-height:1.1;
+height: 50px;
+text-align:center;
+margin-top:14px;
+
+}
+#footer 
+{
+    position: fixed;
+ /* Фиксированное положение */    left: 0;
+ bottom: 0;
+ /* Левый нижний угол */    /*padding: 10px;
+ /* Поля вокруг текста */    background: -webkit-gradient(linear, center top, center bottom, from(#f5f5f5), color-stop(25%, #f0f0f0), color-stop(50%, #ebebeb), color-stop(75%, #f0f0f0), to(#f5f5f5));
+    color: #fff;
+ /* Цвет текста */    width: 100%;
+ /* Ширина слоя */  z-index:1001;
+   
+}
+.table/*Таблица для иконок контактов и социальных сетей*/
+{
+  display:table;
+
+}
+.row
+{
+  display:table-row;
+  
+}
+.col
+{
+  display:table-cell;
+  text-align: center;
+  
+}
+.col_img
+{
+  width:40px;
+ 
+}
+span.round
+{
+  font-size: 10px;
+  background: #654696;
+  border-radius: 0.8em;
+  -moz-border-radius: 0.8em;
+  -webkit-border-radius: 0.8em;
+  color: #ffffff;
+  display: inline-block;
+  font-weight: bold;
+  line-height: 1.6em;
+  /*margin-right: 15px;
+*/  text-align: center;
+  width: 1.6em;
+ 
+}
+.form_search
+{
+  border: 1px solid #ddd;
+  border-radius: 30px;
+  width:96%;
+  margin:6px 2% 0 2%;
+  position:fixed;
+  z-index:2999;
+  border: solid 1px #d2d2d2;
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  border-radius: 2em;
+  -webkit-box-shadow: 0 1px 0px rgba(0,0,0,.1);
+  -moz-box-shadow: 0 1px 0px rgba(0,0,0,.1);
+  box-shadow: 0 1px 0px rgba(0,0,0,.1);
+  background: #f1f1f1;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+  background: -moz-linear-gradient(top,  #fff,  #ededed);
+  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
+  -ms-filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
+  
+}
+.form_search img
+{
+width: 32px;
+
+}
+.card_body
+{
+  margin-bottom:3px;
+  background-color:#ffffff;
+  border:0px solid #f5f5f5;
+  box-shadow: 0px 2px 15px 3px #f5f5f5;
+  -webkit-box-shadow: 0px 4px 15px 1px #bbbbbb;
+  -webkit-tap-highlight-color: transparent;
+
+}
+.cell_info
+{
+background:#ffffff;
+color:#212121;
+font-family: 'RobotoRegular';
+font-size:14px;
+text-align:left;
+text-shadow: none;
+text-align:justify;
+padding:5px 5px 5px 5px;
+/*vertical-align: middle;
+*/
+}
+.c100
+{
+  width:100%;
+
+}
+.cell_txt
+{
+color:#ffffff;
+font-size:12px;
+text-align:center;
+/*vertical-align: middle;
+*/
+}
+.cell_img
+{
+  width:50px;
+  height:50px;
+  padding: 7px 7px 0 7px;
+  background:#ffffff;
+/*box-shadow: 0px 0px 15px -5px #5b5b5b;
+*/
+}
+/* Хит продаж */.wrapper 
+{
+  /*margin: 50px auto;
+*/  width: 100%;
+  height: 0px;
+  /*background: white;
+*/  border-radius: 10px;
+  -webkit-box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
+  -moz-box-shadow:    0px 0px 8px rgba(0,0,0,0.3);
+  box-shadow:         0px 0px 8px rgba(0,0,0,0.3);
+  position: relative;
+  z-index: 0;
+
+}
+.ribbon-wrapper-red 
+{
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+
+}
+.ribbon-red 
+{
+  font-family: 'RobotoLight';
+    text-align: center;
+    -webkit-transform: rotate(45deg);
+  -moz-transform:    rotate(45deg);
+  -ms-transform:     rotate(45deg);
+  -o-transform:      rotate(45deg);
+  position: relative;
+  padding: 5px 5px;
+  left: 0px;
+  top: 25px;
+  width: 150px;
+  background-color: rgba(197, 5, 255, 0.7);
+/*#c505ff;
+*/    color: #ffffff;
+  -webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
+  -moz-box-shadow:    0px 0px 3px rgba(0,0,0,0.3);
+  box-shadow:         0px 0px 3px rgba(0,0,0,0.3);
+
+}
+.ribbon-red:before, .ribbon-green:after 
+{
+  content: "";
+  border-top:   3px solid #c505ff;
+     border-left:  3px solid transparent;
+  border-right: 3px solid transparent;
+  position:absolute;
+  bottom: -3px;
+
+}
+.ribbon-red:before 
+{
+  left: 0;
+
+}
+.ribbon-red:after 
+{
+  right: 0;
+
+}
+

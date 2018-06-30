@@ -1,0 +1,215 @@
+/******************
+ * CSS WICart Apps
+ ******************/
+@font-face {
+font-family: 'Lobster13Regular';
+src: url('Lobster-Regular.ttf');
+font-weight: normal;
+font-style: normal;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  body {
+    width: 100%;
+  }
+}
+/*body 
+{
+padding: 0;
+margin: 0;	
+background: #f5f0e0 url("/img/noise.png") repeat scroll 0 0;
+color: #252525;
+font-family: Century Gothic,sans-serif;
+font-size: 14px;
+text-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+}*/
+.seporator
+{
+height: 8px;
+background: #9c5959;
+margin: 8px 0;
+-webkit-box-shadow: 0px 5px 5px 0px rgba(50, 50, 50, 0.75);
+-moz-box-shadow:    0px 5px 5px 0px rgba(50, 50, 50, 0.75);
+box-shadow:         0px 5px 5px 0px rgba(50, 50, 50, 0.75);	
+}
+#wrapper
+{
+margin-top: 58px;	
+}
+#header
+{
+top: 0px;	
+padding: 0px;
+position: fixed;
+z-index: 3;
+background: #f5f0e0 url("/img/noise.png") repeat scroll 0 0;
+width: 100%;
+height: 50px;
+}
+#slider
+{
+height: 140px;
+border-radius: 5px;
+background: #73ACDA;	
+margin: 8px;
+}
+#wicart-basket
+{
+margin: 8px;	
+}
+/*h1, h2, h3, h4, h5, h6 
+{
+color: #9c5959;
+font-family: "Lobster13Regular",cursive;
+font-weight: normal;
+text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}*/
+.item
+{
+padding: 10px;	
+border-bottom: 1px dotted #9c5959;
+clear: both;
+	
+}
+.photo_block
+{
+position: relative;
+}
+.item .photo
+{
+background: #9c5959 none repeat scroll 0 0;
+border-radius: 2px;
+box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+padding: 1px;
+float: left;
+width: 120px;
+
+}
+
+.action
+{
+position: absolute;
+background: #F00;
+top: -3px;
+left: -3px;
+color: #FFF;
+padding: 5px;
+box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+font-family: "Lobster13Regular",cursive;
+border-radius: 3px;
+
+}
+h1
+{
+float: left;
+margin: 0 0 10px 0;	
+white-space: nowrap;
+}
+#logo
+{
+border: 1px solid #9c5959;
+margin: 8px;	
+}
+.price
+{
+color: #B43533;
+}
+.right
+{
+float: right;
+}
+.button 
+{
+	white-space: nowrap;
+	font-family: 'Lobster13Regular', cursive;
+	color: #f5f5f5;
+	padding: 8px 14px 10px;
+	background-color: #9c5959;
+	border: none;
+	position: relative;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+	-webkit-box-shadow: inset 0px -3px 1px rgba(0, 0, 0, 0.45), 0px 2px 2px rgba(0, 0, 0, 0.25);
+	-moz-box-shadow: inset 0px -3px 1px rgba(0, 0, 0, 0.45), 0px 2px 2px rgba(0, 0, 0, 0.25);
+	box-shadow: inset 0px -3px 1px rgba(0, 0, 0, 0.45), 0px 2px 2px rgba(0, 0, 0, 0.25);
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	-webkit-text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+	-moz-text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+	text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+	text-decoration: none;
+	font-size: 20px;
+}
+.button-buy
+{
+float: right;
+padding: 8px 14px 10px;
+background-color: #9c5959;
+-webkit-box-shadow: inset 0px -3px 1px rgba(0, 0, 0, 0.45), 0px 2px 2px rgba(0, 0, 0, 0.25);
+-moz-box-shadow: inset 0px -3px 1px rgba(0, 0, 0, 0.45), 0px 2px 2px rgba(0, 0, 0, 0.25);
+box-shadow: inset 0px -3px 1px rgba(0, 0, 0, 0.45), 0px 2px 2px rgba(0, 0, 0, 0.25);
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+-webkit-text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+-moz-text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);	
+}
+.button-buy img
+{
+width: 50px;
+height: auto;	
+}
+.wicart-basket-info
+{
+color: #ffffff;
+font-size: 10px; 
+/*float: right;
+padding: 8px;*/
+ 	
+}
+.stars
+{
+width: 140px;
+float: left;
+margin: 10px;	
+}
+.clear
+{
+clear: both;	
+}
+.descr
+{
+padding: 20px 0px;
+}
+.descr span
+{
+padding: 0 20px;
+display: block;
+overflow: hidden;	
+}
+.message
+{
+background: #FFF;
+border-radius: 10px;
+margin: 20px;
+padding: 50px;
+text-align: center;
+}
+.btn {
+	cursor: pointer;
+     appearance:button; /* For Good Browsers */
+     -moz-appearance:button; /* For Firefox */
+     -webkit-appearance:button; /* For Safari and Chrome */
+}
+.little
+{
+  color: #ffffff;
+font-size: 10px;
+/*font: normal 11px Arial;
+background: #9c5959;
+color: #FFF;
+padding: 3px;*/
+}
