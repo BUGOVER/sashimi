@@ -329,7 +329,11 @@ function WICard(obj, plugins) {
     }
     //	}
   };
+
   this.sendOrder = function(domElm) {
+
+
+
     $('.overlay').addClass('loading');
     if (this.CONFIG.validate) {
       var valid = this.CONFIG.validate.validationEngine('validate');
@@ -367,6 +371,7 @@ function WICard(obj, plugins) {
     //});
 
   };
+
   this.getForm = function(formId) {
     var formObj = document.getElementById(formId);
 

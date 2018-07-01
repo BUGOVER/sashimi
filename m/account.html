@@ -33,9 +33,9 @@
             crossorigin="anonymous"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            var api_token = localStorage.getItem('api_token');;
+            var api_token = localStorage.getItem('api_token');
             $.ajax({
-                url: 'http://sashimi/api/v1/account',
+                url: 'http://sashimi.loc/api/v1/account',
                 data: {api_token: api_token},
                 dataType: 'json',
                 type: 'POST',

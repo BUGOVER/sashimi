@@ -37,6 +37,7 @@
     font-variant-ligatures: normal;
     font-variant-caps: normal;
   }
+
   .custom-input {
     width: 101%;
   }
@@ -95,13 +96,16 @@
         Имя:
         <input id="name" type="text" class="form-control custom-input" placeholder="укажите как к Вам обращаться">
         Телефон:
-        <input id="phone" type="phone" placeholder="укажите Ваш контактный телефон" class="validate[required] form-control custom-input">
+        <input id="phone" type="phone" placeholder="укажите Ваш контактный телефон"
+               class="validate[required] form-control custom-input">
 
         Способ обслуживания:
         <div>
-          <label for="delivery">Доставка</label><input id="delivery" class="form-control" style="transform:scale(1.5);" name="wayDelivery"
+          <label for="delivery">Доставка</label><input id="delivery" class="form-control" style="transform:scale(1.5);"
+                                                       name="wayDelivery"
                                                        type="radio" value="delivery" checked="checked">
-          <label for="self-delivery">Самовывоз</label><input id="self-delivery" class="form-control" style="transform:scale(1.5);"
+          <label for="self-delivery">Самовывоз</label><input id="self-delivery" class="form-control"
+                                                             style="transform:scale(1.5);"
                                                              name="wayDelivery" value="selfdelivery" type="radio">
         </div>
         <div class="group-delivery">
@@ -120,10 +124,11 @@
         <div>
           <div><label for="delivery-fast">Как можно скорее</label>
             <input style="transform:scale(1.5);" id="delivery-fast" class="form-control"
-                                                                         checked="" name="timeDelivery" value="fast"
-                                                                         type="radio"></div>
+                   checked="" name="timeDelivery" value="fast"
+                   type="radio"></div>
           <div><label for="delivery-time">Ко времени</label><input style="transform:scale(1.5);" id="delivery-time"
-                                                                   name="timeDelivery" value="time" type="radio" class="form-control "></div>
+                                                                   name="timeDelivery" value="time" type="radio"
+                                                                   class="form-control "></div>
           <div class="group-time">
             <label for="time-hour">ч.</label>
             <select name="hour" id="time-hour" class="form-control">
@@ -209,13 +214,15 @@
   <input id="address" type="text" placeholder="Укажите улицу, номер дома">-->
       </form>
       <!-- СМЕНА -->
-      <form action="http://rob.loc/api/v1/new" method="POST" name="post-form" id="post-form">
+      <form action="http://sashimi.loc/api/v1/new" method="POST" name="post-form" id="post-form">
         <input type="hidden" name="post-order" id="post-order" class="form-control custom-input">
         <!---------------------------------------
   - Добавляем поле для отправки ключа
   --------------------------------------->
         <div id="data_form">
 
+          <input type="hidden" name="api_token" id="api_token">
+          <input type="hidden" name="order_price" id="order_price">
 
           <input type="hidden" name="post-name" id="post-name">
           <input type="hidden" name="post-phone" id="post-phone">
@@ -248,14 +255,19 @@
       <br>
       <!--<a class="bbutton green" onclick="cart.sendOrder('formToSend,htable,bsum,sum-dost-contener');" href="#!">Отправить заказ</a>-->
     </div>
-  <!----------------------------------------------------->
+    <!----------------------------------------------------->
 
-</div>
+  </div>
 
 
-<script>
-  $(document).ready(function() {
-//		var discount = 0;
+  <script>
+
+    $(document).ready(function() {
+
+      var api_token = localStorage.getItem('api_token');
+      $('#api_token').val(api_token);
+
+      //		var discount = 0;
 //		$('#promo').on('change', function () {
 //
 //			if($(this).val() == settings.setting[3].value) {
@@ -265,378 +277,389 @@
 //				rebusk();
 //			}
 //		});
-    $('.delivery_info_basket').append('<div class="bdelivery">ДОСТАВКА <span class="card_body_right"></span></div>');
+      $('.delivery_info_basket').append('<div class="bdelivery">ДОСТАВКА <span class="card_body_right"></span></div>');
 //		$('.delivery_info_basket').append('<div class="bdiscount">СКИДКА <span class="card_body_right">0</span></div>');
-    $('#itog').append('<div class="bitog">ИТОГО <span class="card_body_right"></span></div>');
-    var settings = $.ajax({
-      url: 'https://sashimi59.proapp-mobi.ru/api/v1/settings',
-      dataType: 'json',
-      async: false,
-    }).responseJSON;
-    var cafe = settings.cafe;
-    $('#cafeId').html('');
-    for (caf in cafe) {
-      $('#cafeId').append('<option value="' + cafe[caf]['id'] + '">' + cafe[caf]['name'] + '</option>');
-    }
-    var rebusk = function() {
-      var sum = Math.round($('#bsum').text().replace(/\D+/g, ''));
-      var deliveryMin = settings.setting[0].value;
-      if (parseInt(sum) < parseInt(deliveryMin)) {
-        $('.error-min-delivery').append('<span>Внимание! Минимальная сумма заказа ' + deliveryMin + ' Ք</span>');
-        $('#sendBusketButton').hide();
-      } else {
-        $('#sendBusketButton').show();
-        $('.error-min-delivery').html('');
+      $('#itog').append('<div class="bitog">ИТОГО <span class="card_body_right"></span></div>');
+      var settings = $.ajax({
+        url: 'http://sashimi.loc/api/v1/settings',
+        dataType: 'json',
+        async: false,
+      }).responseJSON;
+      var cafe = settings.cafe;
+      $('#cafeId').html('');
+      for (caf in cafe) {
+        $('#cafeId').append('<option value="' + cafe[caf]['id'] + '">' + cafe[caf]['name'] + '</option>');
       }
-      var deliveryCost = settings.setting[2].value;
-      var deliveryFree = settings.setting[1].value;
+      var rebusk = function() {
+        var sum = Math.round($('#bsum').text().replace(/\D+/g, ''));
+        $('#order_price').val(sum);
+        var deliveryMin = settings.setting[0].value;
+        if (parseInt(sum) < parseInt(deliveryMin)) {
+          $('.error-min-delivery').append('<span>Внимание! Минимальная сумма заказа ' + deliveryMin + ' Ք</span>');
+          $('#sendBusketButton').hide();
+        } else {
+          $('#sendBusketButton').show();
+          $('.error-min-delivery').html('');
+        }
+        var deliveryCost = settings.setting[2].value;
+        var deliveryFree = settings.setting[1].value;
 
-      if (parseInt(sum) > parseInt(deliveryFree)) {
-        $('.bdelivery span').text('БЕСПЛАТНО');
-        $('.bitog span').text(sum.toString() + ' Ք');
-      } else {
-        var res = parseInt(deliveryCost) + parseInt(sum);
-        $('.bdelivery span').text(deliveryCost + ' Ք');
-        $('.bitog span').text(res.toString() + ' Ք');
-      }
-    };
+        if (parseInt(sum) > parseInt(deliveryFree)) {
+          $('.bdelivery span').text('БЕСПЛАТНО');
+          $('.bitog span').text(sum.toString() + ' Ք');
+        } else {
+          var res = parseInt(deliveryCost) + parseInt(sum);
+          $('.bdelivery span').text(deliveryCost + ' Ք');
+          $('.bitog span').text(res.toString() + ' Ք');
+        }
+      };
 
-    rebusk();
-    $(cart).on('deleteItem', rebusk);
+      rebusk();
+      $(cart).on('deleteItem', rebusk);
 
-    $('.cart_mp').on('click', rebusk);
-    $('input[name="wayDelivery"]').on('click', function() {
-      if ($('input[name="wayDelivery"]:checked').val() == 'delivery') {
-        $('.group-delivery').show();
-      } else {
-        $('.group-delivery').hide();
-      }
-    });
-    $('.group-time').hide();
-    $('input[name="timeDelivery"]').on('click', function() {
-      if ($('input[name="timeDelivery"]:checked').val() == 'time') {
-        $('.group-time').show();
-      } else {
-        $('.group-time').hide();
-      }
-    });
-
-    $('#phone').mask('+7 (999) 999-9999');
-    $('#formToSend').validationEngine({promptPosition: 'topLeft'});
-    $('#bcontainer').css({'position': 'static'});
-    $('#basket').append($('#bcontainer'));
-    $('#bcontainer').show();
-
-    $(cart).on('clickSendForm', function() {
-      for (item in cart.DATA) {
-        $('#data_form').
-            append('<input type="hidden" name="produts[' + item + ']" value="' + cart.DATA[item].num + '">');
-      }
-      if ($('#name').size() > 0) {
-        $('#post-name').val($('#name').val());
-      }
-      if ($('#phone').size() > 0) {
-        $('#post-phone').val($('#phone').val());
-      }
-      if ($('#place').size() > 0) {
-        $('#post-place').val($('#place').val());
-      }
-      if ($('input[name="wayDelivery"]:checked').size() > 0) {
-        $('#post-wayDelivery').val($('input[name="wayDelivery"]:checked').val());
-      }
-      if ($('#porch').size() > 0) {
-        $('#post-porch').val($('#porch').val());
-      }
-      if ($('#floor').size() > 0) {
-        $('#post-floor').val($('#floor').val());
-      }
-      if ($('input[name="timeDelivery"]:checked').size() > 0) {
+      $('.cart_mp').on('click', rebusk);
+      $('input[name="wayDelivery"]').on('click', function() {
+        if ($('input[name="wayDelivery"]:checked').val() == 'delivery') {
+          $('.group-delivery').show();
+        } else {
+          $('.group-delivery').hide();
+        }
+      });
+      $('.group-time').hide();
+      $('input[name="timeDelivery"]').on('click', function() {
         if ($('input[name="timeDelivery"]:checked').val() == 'time') {
-          $('#post-hour').val($('#time-hour').val());
-          $('#post-min').val($('#time-min').val());
+          $('.group-time').show();
+        } else {
+          $('.group-time').hide();
         }
-        $('#post-timeDelivery').val($('input[name="timeDelivery"]:checked').val());
-      }
-      if ($('#cafeId').size() > 0) {
-        $('#post-cafeId').val($('#cafeId').val());
-      }
-      if ($('#promo').size() > 0) {
-        $('#post-promo').val($('#promo').val());
-      }
-      for (item in cart.DATA) {
-        $('#data_form').
-            append('<input type="hidden" name="produts[' + item + ']" value="' + cart.DATA[item].num + '">');
-      }
+      });
+
+      $('#phone').mask('+7 (999) 999-9999');
+      $('#formToSend').validationEngine({promptPosition: 'topLeft'});
+      $('#bcontainer').css({'position': 'static'});
+      $('#basket').append($('#bcontainer'));
+      $('#bcontainer').show();
+
+      $(cart).on('clickSendForm', function() {
+        for (item in cart.DATA) {
+          $('#data_form').
+              append('<input type="hidden" name="produts[' + item + ']" value="' + cart.DATA[item].num + '">');
+        }
+        if ($('#name').size() > 0) {
+          $('#post-name').val($('#name').val());
+        }
+        if ($('#phone').size() > 0) {
+          $('#post-phone').val($('#phone').val());
+        }
+        if ($('#place').size() > 0) {
+          $('#post-place').val($('#place').val());
+        }
+        if ($('input[name="wayDelivery"]:checked').size() > 0) {
+          $('#post-wayDelivery').val($('input[name="wayDelivery"]:checked').val());
+        }
+        if ($('#porch').size() > 0) {
+          $('#post-porch').val($('#porch').val());
+        }
+        if ($('#floor').size() > 0) {
+          $('#post-floor').val($('#floor').val());
+        }
+        if ($('input[name="timeDelivery"]:checked').size() > 0) {
+          if ($('input[name="timeDelivery"]:checked').val() == 'time') {
+            $('#post-hour').val($('#time-hour').val());
+            $('#post-min').val($('#time-min').val());
+          }
+          $('#post-timeDelivery').val($('input[name="timeDelivery"]:checked').val());
+        }
+        if ($('#cafeId').size() > 0) {
+          $('#post-cafeId').val($('#cafeId').val());
+        }
+        if ($('#promo').size() > 0) {
+          $('#post-promo').val($('#promo').val());
+        }
+        for (item in cart.DATA) {
+          $('#data_form').
+              append('<input type="hidden" name="produts[' + item + ']" value="' + cart.DATA[item].num + '">');
+        }
+      });
     });
-  });
-</script>
+    //
+    // $('html').ready(function() {
+    //
+    //   let prices = $('.card_body_right').val();
+    //   $('#order_price_count').val(prices);
+    //
+    // });
+
+  </script>
 
 
-<script aria-hidden="true" type="application/x-lastpass" id="hiddenlpsubmitdiv" style="display: none;"></script>
-<script>
-try {
-  (function() {
-    for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
-      var lastpass_f = document.forms[lastpass_iter];
-      if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
-        lastpass_f.lpsubmitorig2 = lastpass_f.submit;
-        if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
-          continue;
-        }
-        lastpass_f.submit = function() {
-          var form = this;
-          var customEvent = document.createEvent('Event');
-          customEvent.initEvent('lpCustomEvent', true, true);
-          var d = document.getElementById('hiddenlpsubmitdiv');
-          if (d) {
-            for (var i = 0; i < document.forms.length; i++) {
-              if (document.forms[i] == form) {
-                if (typeof(d.innerText) != 'undefined') {
-                  d.innerText = i.toString();
-                } else {
-                  d.textContent = i.toString();
+  <script aria-hidden="true" type="application/x-lastpass" id="hiddenlpsubmitdiv" style="display: none;"></script>
+  <script>
+  try {
+    (function() {
+      for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
+        var lastpass_f = document.forms[lastpass_iter];
+        if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
+          lastpass_f.lpsubmitorig2 = lastpass_f.submit;
+          if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
+            continue;
+          }
+          lastpass_f.submit = function() {
+            var form = this;
+            var customEvent = document.createEvent('Event');
+            customEvent.initEvent('lpCustomEvent', true, true);
+            var d = document.getElementById('hiddenlpsubmitdiv');
+            if (d) {
+              for (var i = 0; i < document.forms.length; i++) {
+                if (document.forms[i] == form) {
+                  if (typeof(d.innerText) != 'undefined') {
+                    d.innerText = i.toString();
+                  } else {
+                    d.textContent = i.toString();
+                  }
                 }
               }
+              d.dispatchEvent(customEvent);
             }
-            d.dispatchEvent(customEvent);
-          }
-          form.lpsubmitorig2();
-        };
-      }
-    }
-  })();
-} catch (e) {
-}</script>
-<script>try {
-  (function() {
-    for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
-      var lastpass_f = document.forms[lastpass_iter];
-      if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
-        lastpass_f.lpsubmitorig2 = lastpass_f.submit;
-        if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
-          continue;
+            form.lpsubmitorig2();
+          };
         }
-        lastpass_f.submit = function() {
-          var form = this;
-          var customEvent = document.createEvent('Event');
-          customEvent.initEvent('lpCustomEvent', true, true);
-          var d = document.getElementById('hiddenlpsubmitdiv');
-          if (d) {
-            for (var i = 0; i < document.forms.length; i++) {
-              if (document.forms[i] == form) {
-                if (typeof(d.innerText) != 'undefined') {
-                  d.innerText = i.toString();
-                } else {
-                  d.textContent = i.toString();
+      }
+    })();
+  } catch (e) {
+  }</script>
+
+  <script>try {
+    (function() {
+      for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
+        var lastpass_f = document.forms[lastpass_iter];
+        if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
+          lastpass_f.lpsubmitorig2 = lastpass_f.submit;
+          if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
+            continue;
+          }
+          lastpass_f.submit = function() {
+            var form = this;
+            var customEvent = document.createEvent('Event');
+            customEvent.initEvent('lpCustomEvent', true, true);
+            var d = document.getElementById('hiddenlpsubmitdiv');
+            if (d) {
+              for (var i = 0; i < document.forms.length; i++) {
+                if (document.forms[i] == form) {
+                  if (typeof(d.innerText) != 'undefined') {
+                    d.innerText = i.toString();
+                  } else {
+                    d.textContent = i.toString();
+                  }
                 }
               }
+              d.dispatchEvent(customEvent);
             }
-            d.dispatchEvent(customEvent);
-          }
-          form.lpsubmitorig2();
-        };
-      }
-    }
-  })();
-} catch (e) {
-}</script>
-<script>try {
-  (function() {
-    for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
-      var lastpass_f = document.forms[lastpass_iter];
-      if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
-        lastpass_f.lpsubmitorig2 = lastpass_f.submit;
-        if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
-          continue;
+            form.lpsubmitorig2();
+          };
         }
-        lastpass_f.submit = function() {
-          var form = this;
-          var customEvent = document.createEvent('Event');
-          customEvent.initEvent('lpCustomEvent', true, true);
-          var d = document.getElementById('hiddenlpsubmitdiv');
-          if (d) {
-            for (var i = 0; i < document.forms.length; i++) {
-              if (document.forms[i] == form) {
-                if (typeof(d.innerText) != 'undefined') {
-                  d.innerText = i.toString();
-                } else {
-                  d.textContent = i.toString();
+      }
+    })();
+  } catch (e) {
+  }</script>
+  <script>try {
+    (function() {
+      for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
+        var lastpass_f = document.forms[lastpass_iter];
+        if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
+          lastpass_f.lpsubmitorig2 = lastpass_f.submit;
+          if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
+            continue;
+          }
+          lastpass_f.submit = function() {
+            var form = this;
+            var customEvent = document.createEvent('Event');
+            customEvent.initEvent('lpCustomEvent', true, true);
+            var d = document.getElementById('hiddenlpsubmitdiv');
+            if (d) {
+              for (var i = 0; i < document.forms.length; i++) {
+                if (document.forms[i] == form) {
+                  if (typeof(d.innerText) != 'undefined') {
+                    d.innerText = i.toString();
+                  } else {
+                    d.textContent = i.toString();
+                  }
                 }
               }
+              d.dispatchEvent(customEvent);
             }
-            d.dispatchEvent(customEvent);
-          }
-          form.lpsubmitorig2();
-        };
-      }
-    }
-  })();
-} catch (e) {
-}</script>
-<script>try {
-  (function() {
-    for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
-      var lastpass_f = document.forms[lastpass_iter];
-      if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
-        lastpass_f.lpsubmitorig2 = lastpass_f.submit;
-        if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
-          continue;
+            form.lpsubmitorig2();
+          };
         }
-        lastpass_f.submit = function() {
-          var form = this;
-          var customEvent = document.createEvent('Event');
-          customEvent.initEvent('lpCustomEvent', true, true);
-          var d = document.getElementById('hiddenlpsubmitdiv');
-          if (d) {
-            for (var i = 0; i < document.forms.length; i++) {
-              if (document.forms[i] == form) {
-                if (typeof(d.innerText) != 'undefined') {
-                  d.innerText = i.toString();
-                } else {
-                  d.textContent = i.toString();
+      }
+    })();
+  } catch (e) {
+  }</script>
+  <script>try {
+    (function() {
+      for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
+        var lastpass_f = document.forms[lastpass_iter];
+        if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
+          lastpass_f.lpsubmitorig2 = lastpass_f.submit;
+          if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
+            continue;
+          }
+          lastpass_f.submit = function() {
+            var form = this;
+            var customEvent = document.createEvent('Event');
+            customEvent.initEvent('lpCustomEvent', true, true);
+            var d = document.getElementById('hiddenlpsubmitdiv');
+            if (d) {
+              for (var i = 0; i < document.forms.length; i++) {
+                if (document.forms[i] == form) {
+                  if (typeof(d.innerText) != 'undefined') {
+                    d.innerText = i.toString();
+                  } else {
+                    d.textContent = i.toString();
+                  }
                 }
               }
+              d.dispatchEvent(customEvent);
             }
-            d.dispatchEvent(customEvent);
-          }
-          form.lpsubmitorig2();
-        };
-      }
-    }
-  })();
-} catch (e) {
-}</script>
-<script>try {
-  (function() {
-    for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
-      var lastpass_f = document.forms[lastpass_iter];
-      if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
-        lastpass_f.lpsubmitorig2 = lastpass_f.submit;
-        if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
-          continue;
+            form.lpsubmitorig2();
+          };
         }
-        lastpass_f.submit = function() {
-          var form = this;
-          var customEvent = document.createEvent('Event');
-          customEvent.initEvent('lpCustomEvent', true, true);
-          var d = document.getElementById('hiddenlpsubmitdiv');
-          if (d) {
-            for (var i = 0; i < document.forms.length; i++) {
-              if (document.forms[i] == form) {
-                if (typeof(d.innerText) != 'undefined') {
-                  d.innerText = i.toString();
-                } else {
-                  d.textContent = i.toString();
+      }
+    })();
+  } catch (e) {
+  }</script>
+  <script>try {
+    (function() {
+      for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
+        var lastpass_f = document.forms[lastpass_iter];
+        if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
+          lastpass_f.lpsubmitorig2 = lastpass_f.submit;
+          if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
+            continue;
+          }
+          lastpass_f.submit = function() {
+            var form = this;
+            var customEvent = document.createEvent('Event');
+            customEvent.initEvent('lpCustomEvent', true, true);
+            var d = document.getElementById('hiddenlpsubmitdiv');
+            if (d) {
+              for (var i = 0; i < document.forms.length; i++) {
+                if (document.forms[i] == form) {
+                  if (typeof(d.innerText) != 'undefined') {
+                    d.innerText = i.toString();
+                  } else {
+                    d.textContent = i.toString();
+                  }
                 }
               }
+              d.dispatchEvent(customEvent);
             }
-            d.dispatchEvent(customEvent);
-          }
-          form.lpsubmitorig2();
-        };
-      }
-    }
-  })();
-} catch (e) {
-}</script>
-<script>try {
-  (function() {
-    for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
-      var lastpass_f = document.forms[lastpass_iter];
-      if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
-        lastpass_f.lpsubmitorig2 = lastpass_f.submit;
-        if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
-          continue;
+            form.lpsubmitorig2();
+          };
         }
-        lastpass_f.submit = function() {
-          var form = this;
-          var customEvent = document.createEvent('Event');
-          customEvent.initEvent('lpCustomEvent', true, true);
-          var d = document.getElementById('hiddenlpsubmitdiv');
-          if (d) {
-            for (var i = 0; i < document.forms.length; i++) {
-              if (document.forms[i] == form) {
-                if (typeof(d.innerText) != 'undefined') {
-                  d.innerText = i.toString();
-                } else {
-                  d.textContent = i.toString();
+      }
+    })();
+  } catch (e) {
+  }</script>
+  <script>try {
+    (function() {
+      for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
+        var lastpass_f = document.forms[lastpass_iter];
+        if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
+          lastpass_f.lpsubmitorig2 = lastpass_f.submit;
+          if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
+            continue;
+          }
+          lastpass_f.submit = function() {
+            var form = this;
+            var customEvent = document.createEvent('Event');
+            customEvent.initEvent('lpCustomEvent', true, true);
+            var d = document.getElementById('hiddenlpsubmitdiv');
+            if (d) {
+              for (var i = 0; i < document.forms.length; i++) {
+                if (document.forms[i] == form) {
+                  if (typeof(d.innerText) != 'undefined') {
+                    d.innerText = i.toString();
+                  } else {
+                    d.textContent = i.toString();
+                  }
                 }
               }
+              d.dispatchEvent(customEvent);
             }
-            d.dispatchEvent(customEvent);
-          }
-          form.lpsubmitorig2();
-        };
-      }
-    }
-  })();
-} catch (e) {
-}</script>
-<script>try {
-  (function() {
-    for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
-      var lastpass_f = document.forms[lastpass_iter];
-      if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
-        lastpass_f.lpsubmitorig2 = lastpass_f.submit;
-        if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
-          continue;
+            form.lpsubmitorig2();
+          };
         }
-        lastpass_f.submit = function() {
-          var form = this;
-          var customEvent = document.createEvent('Event');
-          customEvent.initEvent('lpCustomEvent', true, true);
-          var d = document.getElementById('hiddenlpsubmitdiv');
-          if (d) {
-            for (var i = 0; i < document.forms.length; i++) {
-              if (document.forms[i] == form) {
-                if (typeof(d.innerText) != 'undefined') {
-                  d.innerText = i.toString();
-                } else {
-                  d.textContent = i.toString();
+      }
+    })();
+  } catch (e) {
+  }</script>
+  <script>try {
+    (function() {
+      for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
+        var lastpass_f = document.forms[lastpass_iter];
+        if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
+          lastpass_f.lpsubmitorig2 = lastpass_f.submit;
+          if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
+            continue;
+          }
+          lastpass_f.submit = function() {
+            var form = this;
+            var customEvent = document.createEvent('Event');
+            customEvent.initEvent('lpCustomEvent', true, true);
+            var d = document.getElementById('hiddenlpsubmitdiv');
+            if (d) {
+              for (var i = 0; i < document.forms.length; i++) {
+                if (document.forms[i] == form) {
+                  if (typeof(d.innerText) != 'undefined') {
+                    d.innerText = i.toString();
+                  } else {
+                    d.textContent = i.toString();
+                  }
                 }
               }
+              d.dispatchEvent(customEvent);
             }
-            d.dispatchEvent(customEvent);
-          }
-          form.lpsubmitorig2();
-        };
-      }
-    }
-  })();
-} catch (e) {
-}</script>
-<script>try {
-  (function() {
-    for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
-      var lastpass_f = document.forms[lastpass_iter];
-      if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
-        lastpass_f.lpsubmitorig2 = lastpass_f.submit;
-        if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
-          continue;
+            form.lpsubmitorig2();
+          };
         }
-        lastpass_f.submit = function() {
-          var form = this;
-          var customEvent = document.createEvent('Event');
-          customEvent.initEvent('lpCustomEvent', true, true);
-          var d = document.getElementById('hiddenlpsubmitdiv');
-          if (d) {
-            for (var i = 0; i < document.forms.length; i++) {
-              if (document.forms[i] == form) {
-                if (typeof(d.innerText) != 'undefined') {
-                  d.innerText = i.toString();
-                } else {
-                  d.textContent = i.toString();
+      }
+    })();
+  } catch (e) {
+  }</script>
+  <script>try {
+    (function() {
+      for (var lastpass_iter = 0; lastpass_iter < document.forms.length; lastpass_iter++) {
+        var lastpass_f = document.forms[lastpass_iter];
+        if (typeof(lastpass_f.lpsubmitorig2) == 'undefined') {
+          lastpass_f.lpsubmitorig2 = lastpass_f.submit;
+          if (typeof(lastpass_f.lpsubmitorig2) == 'object') {
+            continue;
+          }
+          lastpass_f.submit = function() {
+            var form = this;
+            var customEvent = document.createEvent('Event');
+            customEvent.initEvent('lpCustomEvent', true, true);
+            var d = document.getElementById('hiddenlpsubmitdiv');
+            if (d) {
+              for (var i = 0; i < document.forms.length; i++) {
+                if (document.forms[i] == form) {
+                  if (typeof(d.innerText) != 'undefined') {
+                    d.innerText = i.toString();
+                  } else {
+                    d.textContent = i.toString();
+                  }
                 }
               }
+              d.dispatchEvent(customEvent);
             }
-            d.dispatchEvent(customEvent);
-          }
-          form.lpsubmitorig2();
-        };
+            form.lpsubmitorig2();
+          };
+        }
       }
-    }
-  })();
-} catch (e) {
-}</script>
-</div></body>
+    })();
+  } catch (e) {
+  }</script>
+</div>
+</body>
 </html>

@@ -1,17 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-use Validator;
+
 use App\AppUser;
 use App\Cafe;
 use App\Order;
 use App\Product;
 use App\ProductOrder;
 use App\Setting;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Session;
+use function print_r;
+use Validator;
+use function floor;
 use function response;
 
 /**
@@ -85,7 +88,7 @@ class ApiController extends Controller
         ];
 
 
-        return response()->json($result)->header('Access-Control-Allow-Origin', '*');;
+        return response()->json($result)->header('Access-Control-Allow-Origin', '*');
     }
 
 
@@ -110,6 +113,7 @@ class ApiController extends Controller
         $order->odd_money = $request->input('odd-money') ? $request->input('odd-money') : 0;
         $order->cafe_id = $request->input('post-cafeId');
         $order->promo = $request->input('post-promo');
+        $order->price = $request->input('order_price');
         $order->discount = $request->input('discount') ? $request->input('discount') : 0;
         $order->created_at = $time;
         $order->updated_at = $time;
@@ -167,6 +171,14 @@ class ApiController extends Controller
                 $productsOrder->save();
             }
         });
+
+        if ($request->input('order_price') && $request->input('api_token')) {
+            $user = AppUser::where('api_token', '=', $request->input('api_token'))->first();
+            $bonus = floor($request->input('order_price')) / 10 + $user->bonus;
+            $user->bonus = $bonus;
+            $user->save();
+        }
+
         return view('emails.success', [
         ]);
     }
