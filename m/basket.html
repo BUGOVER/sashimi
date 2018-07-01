@@ -108,6 +108,18 @@
                                                              style="transform:scale(1.5);"
                                                              name="wayDelivery" value="selfdelivery" type="radio">
         </div>
+
+        Оплаты бонусами
+        <div>
+          <label for="delivery">Доставка</label>
+          <input id="bonus-checke" class="form-control" style="transform:scale(1.5);" name="wayDelivery"
+                 type="checkbox" value="delivery">
+        </div>
+
+        <div class="bonus_payment">
+          <input type="number" placeholder="bonus" name="bonus_counter" id="bonus_counter">
+        </div>
+
         <div class="group-delivery">
           <div>
             Адрес доставки:
@@ -120,15 +132,19 @@
           <input id="floor" type="text" placeholder="укажите этаж" class="form-control custom-input">
 
         </div>
+
         Укажите время:
         <div>
           <div><label for="delivery-fast">Как можно скорее</label>
             <input style="transform:scale(1.5);" id="delivery-fast" class="form-control"
                    checked="" name="timeDelivery" value="fast"
                    type="radio"></div>
-          <div><label for="delivery-time">Ко времени</label><input style="transform:scale(1.5);" id="delivery-time"
-                                                                   name="timeDelivery" value="time" type="radio"
-                                                                   class="form-control "></div>
+          <div>
+            <label for="delivery-time">Ко времени</label>
+            <input style="transform:scale(1.5);" id="delivery-time" name="timeDelivery" value="time" type="radio"
+                   class="form-control ">
+          </div>
+
           <div class="group-time">
             <label for="time-hour">ч.</label>
             <select name="hour" id="time-hour" class="form-control">
@@ -223,6 +239,7 @@
 
           <input type="hidden" name="api_token" id="api_token">
           <input type="hidden" name="order_price" id="order_price">
+          <input type="hidden" name="bonus_counter" id="bonus_counter">
 
           <input type="hidden" name="post-name" id="post-name">
           <input type="hidden" name="post-phone" id="post-phone">
@@ -293,6 +310,7 @@
       var rebusk = function() {
         var sum = Math.round($('#bsum').text().replace(/\D+/g, ''));
         $('#order_price').val(sum);
+
         var deliveryMin = settings.setting[0].value;
         if (parseInt(sum) < parseInt(deliveryMin)) {
           $('.error-min-delivery').append('<span>Внимание! Минимальная сумма заказа ' + deliveryMin + ' Ք</span>');
@@ -380,6 +398,7 @@
           $('#data_form').
               append('<input type="hidden" name="produts[' + item + ']" value="' + cart.DATA[item].num + '">');
         }
+
       });
     });
     //

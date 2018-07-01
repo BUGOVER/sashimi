@@ -347,6 +347,8 @@ $app->group(['prefix' => 'api/v1'], function ($app) {
     $app->get('cafe', 'ApiController@getCafe');
     $app->post('new', 'ApiController@newOrder');
 
+    $app->post('get_bonus', 'ApiController@getBonusById');
+
     $app->post('register', 'ApiController@register');
     $app->post('login', 'ApiController@login');
     $app->post('account', 'ApiController@account');

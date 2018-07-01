@@ -8,11 +8,9 @@ use App\Order;
 use App\Product;
 use App\ProductOrder;
 use App\Setting;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use function print_r;
 use Validator;
 use function floor;
 use function response;
@@ -58,6 +56,16 @@ class ApiController extends Controller
     }
 
     /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getBonusById(Request $request)
+    {
+        $bonus = AppUser::where('api_token', '=', $request->input('token'))->first(['bonus']);
+        return response()->json(['bonus' => $bonus->bonus])->header('Access-Control-Allow-Origin', '*');
+    }
+
+    /**
      * @param $productId
      * @return \Illuminate\Http\JsonResponse
      */
@@ -98,6 +106,10 @@ class ApiController extends Controller
      */
     public function newOrder(Request $request)
     {
+        echo '<pre>';
+        print_r($request->input('bonus_counter'));die;
+        echo '</pre>';
+
         $time = strtotime("now+4 hour");
 
         $order = new Order();
@@ -223,6 +235,10 @@ class ApiController extends Controller
         return response()->json($response)->header('Access-Control-Allow-Origin', '*');
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request)
     {
         $data = $request->data;
@@ -238,6 +254,10 @@ class ApiController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @return AppUser|\Illuminate\Database\Eloquent\Model
+     */
     public function account(Request $request)
     {
         $api_token = $request->api_token;

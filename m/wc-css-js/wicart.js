@@ -183,6 +183,9 @@ function WICard(obj, plugins) {
 				<div class=\'delivery_info_basket\'>\
                     СУММА <span class=\'card_body_right\' id=\'bsum\'>...</span>\
                     </div>\
+          <div class=\'delivery_info_bonus\'>\
+                    БОНУС <span class=\'card_body_right\' id=\'bonus\'>...</span>\
+                    </div>\
 				<div id=\'bfooter\'><button class=\'bbutton-basket\' onclick="cart.showWinow(\'order\', 1)">' +
           local.order + '</button></div> \
 				<table id=\'htable\' class=\'hidden\'></table> \
@@ -289,6 +292,23 @@ function WICard(obj, plugins) {
     }
     $('#bsum').html(sum + ' Ք');
 
+    let token = localStorage.getItem('api_token');
+    let bonusUrl = 'http://sashimi.loc/api/v1/get_bonus';
+    if (token.length > 0) {
+      $.ajax({
+        url: bonusUrl,
+        data: {token: token},
+        type: 'POST',
+        crossDomain: true,
+        dataType: 'json',
+        success: function(data) {
+          $('#bonus').html(data.bonus + ' B');
+        },
+      });
+    }
+
+    $('#bonus').html(sum + ' Ք');
+
     //if (sum == 0) document.location.href = 'index.html';
   };
   this.center = function(obj) {
@@ -331,8 +351,6 @@ function WICard(obj, plugins) {
   };
 
   this.sendOrder = function(domElm) {
-
-
 
     $('.overlay').addClass('loading');
     if (this.CONFIG.validate) {
