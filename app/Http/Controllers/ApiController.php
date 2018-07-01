@@ -107,8 +107,7 @@ class ApiController extends Controller
     public function newOrder(Request $request)
     {
         echo '<pre>';
-        print_r($request->input('bonus_counter'));die;
-        echo '</pre>';
+        print_r($request->all());die;
 
         $time = strtotime("now+4 hour");
 

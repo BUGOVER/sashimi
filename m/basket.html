@@ -109,17 +109,6 @@
                                                              name="wayDelivery" value="selfdelivery" type="radio">
         </div>
 
-        Оплаты бонусами
-        <div>
-          <label for="delivery">Доставка</label>
-          <input id="bonus-checke" class="form-control" style="transform:scale(1.5);" name="wayDelivery"
-                 type="checkbox" value="delivery">
-        </div>
-
-        <div class="bonus_payment">
-          <input type="number" placeholder="bonus" name="bonus_counter" id="bonus_counter">
-        </div>
-
         <div class="group-delivery">
           <div>
             Адрес доставки:
@@ -131,6 +120,23 @@
           Этаж:
           <input id="floor" type="text" placeholder="укажите этаж" class="form-control custom-input">
 
+        </div>
+
+        Оплата:
+        <div>
+          <label for="cash_pay">Наличными</label>
+          <input id="cash_pay" style="transform:scale(1.5);" name="pay_type" value="cash" checked="checked" type="radio">
+          <label for="card_pay">Банк. Картой</label>
+          <input id="card_pay" style="transform:scale(1.5);" name="pay_type" value="card" type="radio">
+          <label for="bonus_pay">Бонусами</label>
+          <input id="bonus_pay" style="transform:scale(1.5);" name="pay_type" value="bonus" type="radio">
+        </div>
+        <div>
+          Нужна сдача с:
+          <input id="odd-money" name="odd-money" type="text" class="form-control custom-input">
+        </div>
+        <div class="bonus_payment">
+          <input type="number" class="form-control custom-input" placeholder="Бонус"  id="bonus">
         </div>
 
         Укажите время:
@@ -166,7 +172,7 @@
               <option value="16">16
               <option value="17">17
               <option value="18">18
-              <option value="192">19
+              <option value="19">19
               <option value="20">20
               <option value="21">21
               <option value="22">22
@@ -185,10 +191,6 @@
           </div>
 
 
-        </div>
-        <div>
-          Нужна сдача с:
-          <input id="odd-money" name="odd-money" type="text" class="form-control custom-input">
         </div>
         <div>
           Выберите кафе:
@@ -230,7 +232,7 @@
   <input id="address" type="text" placeholder="Укажите улицу, номер дома">-->
       </form>
       <!-- СМЕНА -->
-      <form action="http://sashimi.loc/api/v1/new" method="POST" name="post-form" id="post-form">
+      <form action="http://sashimi/api/v1/new" method="POST" name="post-form" id="post-form">
         <input type="hidden" name="post-order" id="post-order" class="form-control custom-input">
         <!---------------------------------------
   - Добавляем поле для отправки ключа
@@ -239,7 +241,8 @@
 
           <input type="hidden" name="api_token" id="api_token">
           <input type="hidden" name="order_price" id="order_price">
-          <input type="hidden" name="bonus_counter" id="bonus_counter">
+          <input type="hidden" name="post_bonus" id="post_bonus">
+          <input type="hidden" name="post_pay_type" id="pay_type">
 
           <input type="hidden" name="post-name" id="post-name">
           <input type="hidden" name="post-phone" id="post-phone">
@@ -284,6 +287,9 @@
       var api_token = localStorage.getItem('api_token');
       $('#api_token').val(api_token);
 
+      $('#bonus').change(function () {
+          $('#post_bonus').val($(this).val());
+      });
       //		var discount = 0;
 //		$('#promo').on('change', function () {
 //
@@ -298,7 +304,7 @@
 //		$('.delivery_info_basket').append('<div class="bdiscount">СКИДКА <span class="card_body_right">0</span></div>');
       $('#itog').append('<div class="bitog">ИТОГО <span class="card_body_right"></span></div>');
       var settings = $.ajax({
-        url: 'http://sashimi.loc/api/v1/settings',
+        url: 'http://sashimi/api/v1/settings',
         dataType: 'json',
         async: false,
       }).responseJSON;
@@ -363,6 +369,8 @@
           $('#data_form').
               append('<input type="hidden" name="produts[' + item + ']" value="' + cart.DATA[item].num + '">');
         }
+          $('#pay_type').val($('input[name="pay_type"]:checked').val());
+
         if ($('#name').size() > 0) {
           $('#post-name').val($('#name').val());
         }
@@ -394,6 +402,7 @@
         if ($('#promo').size() > 0) {
           $('#post-promo').val($('#promo').val());
         }
+
         for (item in cart.DATA) {
           $('#data_form').
               append('<input type="hidden" name="produts[' + item + ']" value="' + cart.DATA[item].num + '">');
