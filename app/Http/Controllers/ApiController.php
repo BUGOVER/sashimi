@@ -1,14 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Validator;
+use App\AppUser;
 use App\Cafe;
 use App\Order;
 use App\Product;
 use App\ProductOrder;
 use App\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use function response;
 
 /**
@@ -166,6 +169,71 @@ class ApiController extends Controller
         });
         return view('emails.success', [
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return object
+     */
+    public function register(Request $request)
+    {
+        $rules = [
+            'name' => 'required',
+            'email' => 'required|email|unique:app_users',
+            'password' => 'required|min:6',
+            'password_confirmation' => 'same:password',
+        ];
+
+        $messages = [
+            'required' => 'Заполните все поля',
+            'email.email' => 'Введите валидный почтовый адрес',
+            'email.unique' => 'Почтовый адрес уже занят',
+            'password.min' => 'Пароль должен быть минимум 6 символов',
+            'password_confirmation.same' => 'Подтвердите пароль',
+        ];
+
+        $data = $request->data;
+
+        $validator = Validator::make($request->data, $rules, $messages);
+
+        if ($validator->fails()) {
+            return $validator->errors()->all();
+        }
+
+        $user = new AppUser();
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = Hash::make($data['password']);
+        $user->api_token = Hash::make($data['email']);
+        $user->save();
+
+        $response = $user->api_token;
+        return response()->json($response)->header('Access-Control-Allow-Origin', '*');
+    }
+
+    public function login(Request $request)
+    {
+        $data = $request->data;
+        $user = AppUser::where('email', $data['email'])->first();
+        $response = '';
+        if ($user) {
+            if (Hash::check($data['password'], $user->password)) {
+                $response = $user->api_token;
+            }
+        }
+
+        return response()->json($response)->header('Access-Control-Allow-Origin', '*');
+
+    }
+
+    public function account(Request $request)
+    {
+        $api_token = $request->api_token;
+
+        $user = AppUser::where('api_token', $api_token)->firstOrFail();
+
+        return $user;
+
     }
 
 }

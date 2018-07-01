@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta HTTP-EQUIV='Expires' CONTENT='0'>
+
+
+    <meta name="csrf-token" content="VrUY3bGOscvOz1OQk46UH4Za5C3KJd92qBxLbdEy">
+
+    <title></title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="http://2mcs.proapp-mobi.ru/css/app.css">
+
+    <style>
+        #submit_btn {
+            margin-bottom: 15px;
+        }
+    </style>
+
+    <!-- Scripts -->
+    <script>
+        window.Laravel = {"csrfToken":"VrUY3bGOscvOz1OQk46UH4Za5C3KJd92qBxLbdEy"};
+    </script>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var api_token = localStorage.getItem('api_token');;
+            $.ajax({
+                url: 'http://sashimi/api/v1/account',
+                data: {api_token: api_token},
+                dataType: 'json',
+                type: 'POST',
+                success: function (user) {
+                    if (user.length < 1) return;
+
+                    $('#name').val(user.name);
+                    $('#address').val(user.address);
+                    $('#porch').val(user.porch);
+                    $('#floor').val(user.floor);
+                    $('#dob').val(user.dob);
+                    $('#phone').val(user.phone);
+                    $('#email').val(user.email);
+                    $('#bonus').text(user.bonus);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div id="app">
+    <!--<a href="http://2mcs.proapp-mobi.ru/back" >
+<img src="http://2mcs.proapp-mobi.ru/img/back.png" style="max-width: 28px; left: 15px; top: 3%; position: fixed; z-index: 999999">
+</a>-->
+    <div class="container">
+        <!--<div class="row">
+            <div class="col-md-8 col-md-offset-2 col-sm-12">
+                <img src="http://2mcs.proapp-mobi.ru/img/header1.png" class="img-responsive center-block" style="height: 60px;">
+            </div>
+        </div>-->
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 col-sm-12">
+                <form name="edit_form" id="edit_form" action="/mobile/client/profile" method="POST"
+                      class="form-horizontal" enctype="multipart/form-data">
+                    <input type="hidden" name="_token" value="VrUY3bGOscvOz1OQk46UH4Za5C3KJd92qBxLbdEy">
+                    <div class="form-group has-feedback">
+                        <label for="Photo" class="col-md-4 control-label">Фото</label>
+                        <div class="col-md-6">
+                            <img class="img-responsive center-block" style="width: 60px; margin-bottom: 5px;"
+                                 src="/img/clients/92.png">
+                            <input name="Photo" type="file" id="Photo" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name" class="col-md-4 control-label">Имя</label>
+
+                        <div class="col-md-6">
+                            <input id="name" type="text" class="form-control" name="name"
+                                   value="" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address" class="col-md-4 control-label">Адрес доставки (улица, № дома / строения, № квартиры)</label>
+
+                        <div class="col-md-6">
+                            <input id="address" type="text" class="form-control" name="address" value="ул. Тестовая 1, 1">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="porch" class="col-md-4 control-label">Подъезд</label>
+
+                        <div class="col-md-6">
+                            <input id="porch" type="text" class="form-control" name="porch" value="1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="floor" class="col-md-4 control-label">Этаж</label>
+
+                        <div class="col-md-6">
+                            <input id="floor" type="number" class="form-control" name="floor" value="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dob" class="col-md-4 control-label">Дата рождения</label>
+
+                        <div class="col-md-6">
+                            <input id="dob" type="text" class="form-control" name="dob"
+                                   value="2018-04-20">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" class="col-md-4 control-label">Телефон</label>
+
+                        <div class="col-md-6">
+                            <input id="phone" type="tel" class="form-control" name="phone" value="+711111111111">
+                        </div>
+                    </div>
+
+                    <!--<div class="form-group">
+                        <label for="OGRN" class="col-md-4 control-label"></label>
+
+                        <div class="col-md-6">
+                            <input id="OGRN" type="number" class="form-control" name="OGRN" value="111111111111">
+                                                    </div>
+                    </div>-->
+
+                    <div class="form-group">
+                        <label for="email" class="col-md-4 control-label">Логин / e-mail</label>
+
+                        <div class="col-md-6">
+                            <input id="email" type="email" class="form-control" name="email" value="a.gubin2013@yandex.ru">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-md-4 control-label">Пароль</label>
+
+                        <div class="col-md-6">
+                            <input id="password" type="password" class="form-control" autocomplete="none" name="password" value="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password_confirmation" class="col-md-4 control-label">Подтверждение пароля</label>
+                        <div class="col-md-6">
+                            <input id="password_confirmation" type="password" class="form-control"
+                                   name="password_confirmation" value="">
+                        </div>
+                    </div>
+                    <button type="sumbit" id="submit_btn" class="btn btn-primary btn-block">Сохранить</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 col-sm-12">
+                <div class="col-md-8 col-md-offset-2 col-sm-12">
+                    <span class="lead">Доступно <span id="bonus">0</span> бонусов</span>
+                </div>
+                <div class="col-md-8 col-md-offset-2 col-sm-6">
+                    <a href="/mobile/client/chat/91">
+                        <img class="img-responsive round" style="width: 60px;"
+                             src="/img/operators/91.png">
+                    </a>
+                </div>
+                <div class="col-md-8 col-md-offset-2 col-sm-6">
+                    <p>
+                        <a href="/mobile/client/chat/91">Мои бонусы</a></p>
+                    <p><a href="tel:1256869">Мои заказы</a></p>                              <p><a
+                        href="mailto:zakaz10101@yandex.ru">zakaz10101@yandex.ru</a> Поддержка</p>                         </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!--
+        <a href="tel:+74959843142">
+            <img src="http://2mcs.proapp-mobi.ru/img/phone1.png" style="max-width: 10%; right: 20px; top: 3%; position: fixed;">
+        </a>
+            </div>-->
+
+    <script src="http://2mcs.proapp-mobi.ru/js/message.js"></script>
+
+</body>
+</html>

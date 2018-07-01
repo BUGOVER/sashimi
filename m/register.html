@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta HTTP-EQUIV='Expires' CONTENT='0'>
+
+
+    <meta name="csrf-token" content="VrUY3bGOscvOz1OQk46UH4Za5C3KJd92qBxLbdEy">
+
+    <title></title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="http://2mcs.proapp-mobi.ru/css/app.css">
+
+
+    <!-- Scripts -->
+    <script>
+        window.Laravel = {"csrfToken":"VrUY3bGOscvOz1OQk46UH4Za5C3KJd92qBxLbdEy"};
+    </script>
+</head>
+<body>
+
+<div id="app">
+    <div class="container">
+        <div class="row">
+            <!--<div class="col-md-8 col-md-offset-2 col-sm-12">
+                <img src="http://2mcs.proapp-mobi.ru/img/header1.png" class="img-responsive center-block" style="height: 60px;">
+            </div>-->
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 col-sm-12">
+                <form name="register_form" id="register_form" action="" class="form-horizontal">
+                    <input type="hidden" name="_token" value="VrUY3bGOscvOz1OQk46UH4Za5C3KJd92qBxLbdEy">
+
+                    <div id="errors" class="alert-danger" style="display: none;">
+                        <label for="" class="col-md-4 control-label">Исправьте ошибки</label>
+                        <div class="col-md-6">
+                            <ul>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="name" class="col-md-4 control-label">Имя</label>
+
+                        <div class="col-md-6">
+                            <input id="name" type="text" class="form-control" name="name" value="" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="col-md-4 control-label">E-mail</label>
+
+                        <div class="col-md-6">
+                            <input id="email" type="email" class="form-control" name="email" value=""  required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="col-md-4 control-label">Пароль</label>
+
+                        <div class="col-md-6">
+                            <input id="password" type="password" class="form-control" name="password" value=""  required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password_confirmation" class="col-md-4 control-label">Подтвердите пароль</label>
+
+                        <div class="col-md-6">
+                            <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" value="" required>
+                        </div>
+                    </div>
+
+                    <button type="sumbit" id="submit_btn" class="btn btn-primary btn-block">Зарегистрироваться</button>
+                    <p class="text-center">Ecть аккаунт? <a href="login.html" data-state="sourcecode-view" data-params="value_id:25" data-offline="false">Войти</a></p>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--
+    <a href="tel:+74959843142">
+        <img src="http://2mcs.proapp-mobi.ru/img/phone1.png" style="max-width: 10%; right: 20px; top: 3%; position: fixed;">
+    </a>-->
+</div>
+
+<script src="http://2mcs.proapp-mobi.ru/js/message.js"></script>
+
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#register_form').submit(function (e) {
+            e.preventDefault();
+            var data = {
+                _token: $('input[name="_token"]').val(),
+                name: $('input[name="name"]').val(),
+                email: $('input[name="email"]').val(),
+                password: $('input[name="password"]').val(),
+                password_confirmation: $('input[name="password_confirmation"]').val(),
+            };
+            $.post('http://sashimi/api/v1/register', {data: data}, function (response) {
+                if (response instanceof Array) {
+                    $('#errors ul').empty();
+                    for (var i = 0; i < response.length; i++) {
+                        var li = '<li>'+response[i]+'</li>';
+                        console.log(li);
+                        $('#errors ul').append(li);
+                    }
+                    $('#errors').show();
+                 }else {
+                    localStorage.setItem('api_token', response);
+                    window.location.href = 'account.html';
+                }
+            })
+        });
+    });
+</script>
+</body>
+</html>
